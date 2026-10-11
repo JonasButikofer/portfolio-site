@@ -106,6 +106,18 @@ function FeatureTile({ project, onOpen }: { project: Project; onOpen: WorkProps[
         {project.name}
       </h3>
       <p className="text-muted m-0 max-w-[46ch]">{project.tagline}</p>
+      {project.agents && project.agents.length > 0 && (
+        <ul className="m-0 mt-3.5 flex list-none flex-wrap gap-1.5 p-0" aria-label="AI agents">
+          {project.agents.map((agent) => (
+            <li
+              key={agent.name}
+              className="border-accent/40 text-accent rounded-full border px-2.5 py-0.5 font-mono text-[11.5px]"
+            >
+              ✦ {agent.name}
+            </li>
+          ))}
+        </ul>
+      )}
       {project.outcome && (
         <p className="border-accent text-muted m-0 mt-[18px] max-w-[52ch] border-l-2 pl-3 text-sm">
           <b className="text-text mb-0.5 block font-mono text-[11px] font-medium tracking-[0.06em] uppercase">
@@ -139,14 +151,49 @@ function FeatureTile({ project, onOpen }: { project: Project; onOpen: WorkProps[
   );
 }
 
+/** A quiet full-width row: dashed outline, no shadow, small type. For side
+ * projects that belong on the page without competing with the main work. */
+function StripTile({ project, onOpen }: { project: Project; onOpen: WorkProps['onOpen'] }) {
+  return (
+    <button
+      type="button"
+      onClick={() => onOpen(project.slug)}
+      className="group border-line text-text hover:border-muted col-span-full flex cursor-pointer flex-col gap-3 rounded-[20px] border border-dashed bg-transparent px-[22px] py-4 text-left transition-colors sm:flex-row sm:items-center sm:gap-6"
+    >
+      <div className="min-w-0 flex-1">
+        <p className="text-muted m-0 font-mono text-[11px] font-medium tracking-[0.06em] uppercase">
+          {project.context.type}
+          {project.context.source && ` · ${project.context.source}`}
+        </p>
+        <p className="m-0 mt-1 text-sm">
+          <span className="font-semibold">{project.name}</span>{' '}
+          <span className="text-muted">{project.tagline}</span>
+        </p>
+      </div>
+      <div className="flex shrink-0 items-center gap-1.5">
+        <div className="flex flex-wrap gap-1.5 max-md:hidden">
+          {project.stack.slice(0, 4).map((tech) => (
+            <Chip key={tech}>{tech}</Chip>
+          ))}
+        </div>
+        <span className="open-icon max-sm:hidden" aria-hidden="true">
+          ↗
+        </span>
+      </div>
+    </button>
+  );
+}
+
 /**
  * The featured project leads as the large tile; every other project follows
  * in projects-content.json order — as an impact tile when it has a
- * featuredMetric, a plain project tile otherwise.
+ * featuredMetric, a plain project tile otherwise. `tile: 'strip'` projects
+ * come last as quiet full-width rows.
  */
 export function Work({ onOpen }: WorkProps) {
   const featured = projects.find((p) => p.featured) ?? projects[0];
-  const rest = projects.filter((p) => p !== featured);
+  const rest = projects.filter((p) => p !== featured && p.tile !== 'strip');
+  const strips = projects.filter((p) => p !== featured && p.tile === 'strip');
 
   return (
     <>
@@ -168,6 +215,9 @@ export function Work({ onOpen }: WorkProps) {
           <ProjectTile key={project.slug} project={project} className={className} onOpen={onOpen} />
         );
       })}
+      {strips.map((project) => (
+        <StripTile key={project.slug} project={project} onOpen={onOpen} />
+      ))}
     </>
   );
 }

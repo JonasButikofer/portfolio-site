@@ -138,6 +138,30 @@ export function ProjectModal({ project, onClose }: ProjectModalProps) {
             <h3 className={sectionLabel}>What I built</h3>
             <p className="m-0 max-w-(--measure) text-base">{p.built}</p>
 
+            {p.agents && p.agents.length > 0 && (
+              <>
+                <h3 className={sectionLabel}>Agentic work</h3>
+                <div className="flex flex-col gap-2.5">
+                  {p.agents.map((agent) => (
+                    <section
+                      key={agent.name}
+                      className="border-line bg-tile-2 border-l-accent rounded-xl border border-l-2 px-4 py-3.5"
+                    >
+                      <h4 className="m-0 text-base">{agent.name}</h4>
+                      <p className="m-0 mt-1 text-[15px]">{agent.summary}</p>
+                      {agent.points && agent.points.length > 0 && (
+                        <ul className="text-muted m-0 mt-2.5 flex list-disc flex-col gap-1.5 pl-5 text-sm">
+                          {agent.points.map((point) => (
+                            <li key={point}>{point}</li>
+                          ))}
+                        </ul>
+                      )}
+                    </section>
+                  ))}
+                </div>
+              </>
+            )}
+
             {p.architecture && p.architecture.length > 0 && (
               <>
                 <h3 className={sectionLabel}>How it flows</h3>

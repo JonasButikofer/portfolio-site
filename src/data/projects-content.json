@@ -8,15 +8,36 @@
       "source": "Advanced Data Engineering Project"
     },
     "status": "In progress",
-    "problem": "Macro releases move markets, but the relationship is scattered across a dozen data providers and rarely queryable in one place.  You either read a Fed report or a stock chart, not both at once.",
-    "built": "An end-to-end lakehouse on a medallion architecture: batch and streaming ingestion in PySpark from FRED macroeconomic series and market data (Tiingo, Finnhub), transformation in dbt-databricks, and orchestration through Databricks Workflows. A custom MCP server exposes the gold layer to an analytics agent, so the warehouse can be queried in natural language.",
+    "problem": "Macro releases move markets, but the relationship is scattered across a dozen data providers and rarely queryable in one place. You either read a Fed report or a stock chart, not both at once.",
+    "built": "An end-to-end lakehouse on a medallion architecture: batch and streaming ingestion in PySpark from FRED macroeconomic series and market data (Tiingo, Finnhub), transformation in dbt-databricks, and orchestration as a single daily Databricks Workflows DAG defined in an asset bundle. Two Claude-powered agents keep it healthy: one diagnoses data quality failures after every ingest, the other reviews every change pushed to the repo.",
+    "agents": [
+      {
+        "name": "Data quality agent",
+        "summary": "After every daily ingest, about a dozen rule-based checks (freshness, duplicate keys, OHLC sanity, per-series FRED lag, job-run health) write their results to an ops table. Only when something fails, a Claude agent investigates the failures and writes a root-cause report.",
+        "points": [
+          "Investigates with read-only tools: SQL against the lakehouse, Databricks job-run history with error traces, and the project’s own source code.",
+          "Separates real data problems from thresholds that are too strict, like a market holiday or a FRED release delay, and checks whether a failure is new or ongoing.",
+          "Guardrails: a single-statement SQL allowlist plus a write-keyword denylist, file reads confined to project folders, API-key scrubbing, a 15-turn cap, and token counts logged per incident.",
+          "Runs in the daily DAG even when ingest fails (run_if: ALL_DONE); an error-severity failure fails the job and emails a link to the diagnosis."
+        ]
+      },
+      {
+        "name": "AI code review",
+        "summary": "Every push to master is reviewed by Claude (the Claude Code GitHub Action) against a Beacon-specific checklist: MERGE idempotency, watermark edge cases, secrets handling, and Databricks Free Edition concurrency limits. Major or blocker findings open a GitHub issue.",
+        "points": [
+          "Works around the action not accepting push events with a two-hop workflow: the push re-dispatches the review through workflow_dispatch with the pushed commit range.",
+          "Specced a custom reviewer as the next step: static checks first, structured JSON findings, and an eval set of seeded bugs drawn from the project’s own history."
+        ]
+      }
+    ],
     "architecture": [
       "Bronze — raw FRED and market data, batch and Structured Streaming ingest via PySpark",
       "Silver — cleaned, conformed series in Delta Lake",
       "Gold — dbt-databricks models joining macro and market signals",
-      "Serve — MCP server exposing the gold layer to a natural-language analytics agent"
+      "Serve — next: an MCP server exposing the gold layer to a natural-language analytics agent",
+      "Quality — rule-based checks after every ingest; a Claude agent diagnoses anything that fails"
     ],
-    "outcome": "In progress — the medallion pipeline and gold-layer models are running; the agent-facing MCP layer is the current milestone.",
+    "outcome": "In progress — the medallion pipeline, gold-layer models, and the data quality agent run as one daily DAG, and AI code review runs on every push. Next milestone: the MCP server for the analytics agent.",
     "stack": [
       "Databricks",
       "Delta Lake",
@@ -24,6 +45,8 @@
       "Structured Streaming",
       "dbt",
       "Python",
+      "Claude API",
+      "GitHub Actions",
       "MCP"
     ],
     "links": [],
@@ -158,5 +181,31 @@
     "built": "On a team of four I worked as the cloud solution architect and database engineer to build a web application that hosted real-time data for a nonprofit. I made sure that data would report instantly from the cloud database to the dashboard and other metrics tracking devices on the site.",
     "stack": ["AWS EC2", "Postgres", "JavaScript", "Tableau"],
     "links": []
+  },
+  {
+    "slug": "lavender",
+    "name": "lavender.",
+    "tagline": "A family of data tools for people who live in warehouses: lineage, masking, cost, data quality and SQL learning under one sign-in.",
+    "context": {
+      "type": "Side project",
+      "source": "Built with Claude Code"
+    },
+    "status": "In progress",
+    "problem": "Warehouse teams juggle separate tools for lineage, PII masking, cost and data quality, each with its own login, connections and look. I wanted to see how far one person could get designing them as a single, consistent suite.",
+    "built": "A suite of products on one design system and one shared connector layer (Databricks, Snowflake, SQL Server, Oracle, Postgres, DuckDB): dataview maps the whole warehouse with column-level lineage and pull-request impact; masking produces consistent, referentially intact masked data for dev and test; ledger splits the warehouse bill along the lineage graph per table, owner and pull request; pulse flags columns that leave their normal range, drift or go stale; QueryCraft teaches SQL visually; and datasuite ties them together with one sign-in, shared encrypted connections and suite-wide search.",
+    "agents": [
+      {
+        "name": "Overnight Claude Code runs",
+        "summary": "Much of the suite was built in unattended Claude Code sessions working from a written brief I authored: ground rules, the order of work, and the bar for calling something done. My feedback batches steered each next round.",
+        "points": [
+          "Guardrails in the brief: stay inside the repo, commit after every finished unit of work, never push or rewrite history, no real credentials or warehouses, and tests must pass before anything counts as done.",
+          "Two runs a night coordinated through a status file and a running log that ends in a hand-off for the next session."
+        ]
+      }
+    ],
+    "outcome": "Prototypes and MVPs running on demo data, with CI linting and testing every product on each push; dataview has also been run against a real Databricks workspace.",
+    "stack": ["Python", "FastAPI", "React", "TypeScript", "DuckDB", "Docker", "Claude Code"],
+    "links": [],
+    "tile": "strip"
   }
 ]

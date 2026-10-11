@@ -41,6 +41,14 @@ export interface FeaturedMetric {
   units?: number;
 }
 
+/** An AI agent that's part of a project — shown under "Agentic work" in the
+ * project sheet, and as a tag on the project's tile. */
+export interface ProjectAgent {
+  name: string;
+  summary: string;
+  points?: string[];
+}
+
 export interface Project {
   slug: string;
   name: string;
@@ -49,12 +57,16 @@ export interface Project {
   status: ProjectStatus;
   problem: string;
   built: string;
+  agents?: ProjectAgent[];
   architecture?: string[];
   outcome?: string;
   stack: string[];
   featuredMetric?: FeaturedMetric;
   links: ProjectLink[];
   featured?: boolean;
+  /** 'strip' renders a quiet full-width row after the other work tiles — for
+   * side projects that should be there without competing for attention. */
+  tile?: 'strip';
 }
 
 export const projects: Project[] = projectsContent as Project[];
