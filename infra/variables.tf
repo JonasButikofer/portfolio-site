@@ -20,3 +20,15 @@ variable "github_repo" {
   type        = string
   default     = "portfolio-site"
 }
+
+variable "github_owner_id" {
+  description = "Numeric GitHub account ID of the repo owner, as it appears in the OIDC subject claim."
+  type        = string
+  default     = "153689071"
+}
+
+variable "github_repo_id" {
+  description = "Numeric GitHub repository ID, as it appears in the OIDC subject claim."
+  type        = string
+  default     = "1413980917"
+}

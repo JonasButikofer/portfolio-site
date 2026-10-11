@@ -49,7 +49,10 @@ data "aws_iam_policy_document" "github_actions_trust" {
     condition {
       test     = "StringEquals"
       variable = "token.actions.githubusercontent.com:sub"
-      values   = ["repo:${var.github_org}/${var.github_repo}:ref:refs/heads/main"]
+      # GitHub's OIDC subject now embeds immutable numeric IDs, e.g.
+      # repo:OWNER@<owner_id>/REPO@<repo_id>:ref:refs/heads/main. Pinning the IDs
+      # also stops a renamed/recreated repo from inheriting this trust.
+      values = ["repo:${var.github_org}@${var.github_owner_id}/${var.github_repo}@${var.github_repo_id}:ref:refs/heads/main"]
     }
   }
 }
