@@ -37,7 +37,7 @@ export function Field({ label, hint, value, onChange }: FieldProps) {
       <input
         value={value}
         onChange={onChange}
-        className="border-line bg-ink text-text focus-visible:outline-gold rounded-sm border px-3 py-2 outline-none"
+        className="border-line bg-page text-text focus-visible:outline-accent rounded-sm border px-3 py-2 outline-none"
       />
     </label>
   );
@@ -62,7 +62,7 @@ export function TextAreaField({ label, hint, value, rows = 3, onChange }: TextAr
         value={value}
         onChange={onChange}
         rows={rows}
-        className="border-line bg-ink text-text focus-visible:outline-gold rounded-sm border px-3 py-2 outline-none"
+        className="border-line bg-page text-text focus-visible:outline-accent rounded-sm border px-3 py-2 outline-none"
       />
     </label>
   );
@@ -82,7 +82,7 @@ export function SelectField({ label, value, options, onChange }: SelectFieldProp
       <select
         value={value}
         onChange={onChange}
-        className="border-line bg-ink text-text focus-visible:outline-gold rounded-sm border px-3 py-2 outline-none"
+        className="border-line bg-page text-text focus-visible:outline-accent rounded-sm border px-3 py-2 outline-none"
       >
         {options.map((opt) => (
           <option key={opt} value={opt}>
@@ -117,7 +117,7 @@ export function AddButton({ onClick, label }: { onClick: () => void; label: stri
     <button
       type="button"
       onClick={onClick}
-      className="border-line text-text hover:border-gold hover:text-gold self-start rounded-sm border px-3 py-1.5 text-xs transition-colors"
+      className="border-line text-text hover:border-accent hover:text-accent self-start rounded-sm border px-3 py-1.5 text-xs transition-colors"
     >
       + {label}
     </button>

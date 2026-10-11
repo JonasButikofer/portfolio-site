@@ -33,3 +33,6 @@ infra/*.tfplan
 # Original unprocessed photo — only the optimized src/assets/jonas-photo.*
 # derivatives are meant to ship.
 /2B.jpg
+
+# Local UI/UX mockups — not part of the build
+/mockups/

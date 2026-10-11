@@ -30,92 +30,50 @@
     "featured": true
   },
   {
-    "slug": "querycraft",
-    "name": "QueryCraft",
-    "tagline": "A visual SQL learning environment for students who don't write SQL yet.",
-    "context": {
-      "type": "Product + engineering project",
-      "source": "Personal Project"
-    },
-    "status": "Complete",
-    "problem": "I tutored far too many students in SQL and watched them struggle to understand the basics. This is an easy way to get in there and visually learn how SQL works and complete tasks that build your skills. ",
-    "built": "A drag-and-drop query builder, a dropdown builder, a full SQL IDE, an ERD canvas, and a chart visualizer, all over a metadata-provider architecture that supports PostgreSQL and MySQL. Built spec-first from a written PRD, with Kano analysis behind the feature set. The UI uses dnd-kit and a Ctrl+K command palette.",
-    "outcome": "Approaching MVP — the core builder, IDE, ERD canvas, and visualizer are functional; current work is closing gaps against the Kano-prioritized feature set.",
-    "stack": [
-      "TypeScript",
-      "React",
-      "dnd-kit",
-      "PostgreSQL",
-      "MySQL"
-    ],
-    "links": [],
-    "featured": false
-  },
-  {
-    "slug": "new-project",
-    "name": "Production Data Monitoring ",
-    "tagline": "Making sure critical banking data doesn't disappear",
-    "context": {
-      "type": "Internship Work",
-      "source": "Zions Bancorperation"
-    },
-    "status": "Complete",
-    "problem": "Data warehouse data at Zions is complex and there is so much that, if some goes missing, it is hard to know that it did and where it went. ",
-    "built": "I built a data pipeline with 50+ unique tests to verify that no critical data goes missing and makes sure it stays inside of statistical boundaries.",
-    "stack": [
-      "Python",
-      "SQL",
-      "Azure DevOps",
-      "Machine Learning",
-      "Power BI",
-      "Control-M"
-    ],
-    "links": [],
-    "architecture": [
-      "Python + SQL",
-      "Azure DevOps Pipeline",
-      "Control-M (enterprise scheduling)",
-      "Enterprise Data Warehouse ",
-      "Power BI"
-    ]
-  },
-  {
     "slug": "sql-server-fleet-automation",
-    "name": "SQL Server Deployment Automation ",
+    "name": "SQL Server Deployment Automation",
     "tagline": "SQL Server deployment automation that cut configuration time by 90% and cut project time by three months",
     "context": {
       "type": "Internship work",
       "source": "Church of Jesus Christ of Latter-day Saints"
     },
     "status": "Complete",
-    "problem": "We had six months to replace hundreds of SQL Server instances. Configuring each manually took hours. ",
-    "built": "I built PowerShell and T-SQL scripts that saved me (and my boss) 6+ hours daily. I turn it from manually selecting options in Server Manager to clicking two buttons for each server and turning a 2+ hour process into less than 15 minutes. ",
+    "problem": "We had six months to replace hundreds of SQL Server instances. Configuring each manually took hours.",
+    "built": "I built PowerShell and T-SQL scripts that saved me (and my boss) 6+ hours daily. I turn it from manually selecting options in Server Manager to clicking two buttons for each server and turning a 2+ hour process into less than 15 minutes.",
     "outcome": "",
-    "stack": [
-      "PowerShell",
-      "PowerShell Universal",
-      "SQL Server",
-      "WSUS",
-      "T-SQL"
-    ],
+    "stack": ["PowerShell", "PowerShell Universal", "SQL Server", "WSUS", "T-SQL"],
     "links": [],
     "featured": false,
     "featuredMetric": {
       "value": "90%",
-      "label": "reduction in configuration time "
+      "label": "reduction in configuration time",
+      "comparison": [
+        {
+          "label": "before",
+          "display": "2+ hr",
+          "value": 120,
+          "note": "Manual Server Manager setup: 2+ hours per server"
+        },
+        {
+          "label": "after",
+          "display": "<15 min",
+          "value": 15,
+          "note": "Scripted: under 15 minutes per server"
+        }
+      ]
     }
   },
   {
     "slug": "demand-forecasting",
-    "name": "Data Science Distribution Forecasting ",
+    "name": "Data Science Distribution Forecasting",
     "tagline": "A production-deployed forecasting service for a regional distribution center.",
     "context": {
-      "type": "Data Science Portfolio Item ",
+      "type": "Data Science Portfolio Item",
       "source": ""
     },
     "status": "Complete",
     "problem": "A regional distribution center needed a repeatable, automated forecast of weekly demand instead of a spreadsheet re-run by hand — and needed it accurate enough to plan against.",
-    "built": "Weekly demand forecasting in R with modeltime and tidymodels. I tested dozens of models and fine-tuned what I got to get the best outcomes for seasonal demand. The selected model was Prophet on a log-transformed target with exogenous regressors: a peak-period flag, average temperature, and a transport cost index. ",
+    "built": "Weekly demand forecasting in R with modeltime and tidymodels. I tested dozens of models and fine-tuned what I got to get the best outcomes for seasonal demand. The selected model was Prophet on a log-transformed target with exogenous regressors: a peak-period flag, average temperature, and a transport cost index.",
     "architecture": [
       "Weekly demand data → feature engineering in R (modeltime / tidymodels)",
       "Prophet on a log-transformed target with exogenous regressors",
@@ -125,18 +83,65 @@
     "outcome": "Cut MAE roughly 26% against a normal-scale Prophet baseline.",
     "featuredMetric": {
       "value": "26%",
-      "label": "MAE improvement"
+      "label": "lower forecast error (MAE) vs. a baseline Prophet model",
+      "comparison": [
+        {
+          "label": "baseline",
+          "display": "100",
+          "value": 100,
+          "note": "Normal-scale Prophet baseline, MAE indexed to 100"
+        },
+        {
+          "label": "final",
+          "display": "≈74",
+          "value": 74,
+          "note": "Log-target Prophet with regressors: ~26% lower MAE"
+        }
+      ]
     },
-    "stack": [
-      "R",
-      "tidymodels",
-      "modeltime",
-      "Prophet",
-      "vetiver",
-      "plumber",
-      "Docker",
-      "AWS S3"
+    "stack": ["R", "tidymodels", "modeltime", "Prophet", "vetiver", "plumber", "Docker", "AWS S3"],
+    "links": [],
+    "featured": false
+  },
+  {
+    "slug": "new-project",
+    "name": "Production Data Monitoring",
+    "tagline": "Making sure critical banking data doesn't disappear",
+    "context": {
+      "type": "Internship Work",
+      "source": "Zions Bancorporation"
+    },
+    "status": "Complete",
+    "problem": "Data warehouse data at Zions is complex and there is so much that, if some goes missing, it is hard to know that it did and where it went.",
+    "built": "I built a data pipeline with 50+ unique tests to verify that no critical data goes missing and makes sure it stays inside of statistical boundaries.",
+    "stack": ["Python", "SQL", "Azure DevOps", "Machine Learning", "Power BI", "Control-M"],
+    "links": [],
+    "architecture": [
+      "Python + SQL",
+      "Azure DevOps Pipeline",
+      "Control-M (enterprise scheduling)",
+      "Enterprise Data Warehouse",
+      "Power BI"
     ],
+    "featuredMetric": {
+      "value": "50+",
+      "label": "automated tests guarding critical banking data",
+      "units": 50
+    }
+  },
+  {
+    "slug": "querycraft",
+    "name": "QueryCraft",
+    "tagline": "A visual SQL learning environment for students who don't write SQL yet.",
+    "context": {
+      "type": "Product + engineering project",
+      "source": "Personal Project"
+    },
+    "status": "Approaching MVP",
+    "problem": "I tutored far too many students in SQL and watched them struggle to understand the basics. This is an easy way to get in there and visually learn how SQL works and complete tasks that build your skills.",
+    "built": "A drag-and-drop query builder, a dropdown builder, a full SQL IDE, an ERD canvas, and a chart visualizer, all over a metadata-provider architecture that supports PostgreSQL and MySQL. Built spec-first from a written PRD, with Kano analysis behind the feature set. The UI uses dnd-kit and a Ctrl+K command palette.",
+    "outcome": "Approaching MVP — the core builder, IDE, ERD canvas, and visualizer are functional; current work is closing gaps against the Kano-prioritized feature set.",
+    "stack": ["TypeScript", "React", "dnd-kit", "PostgreSQL", "MySQL"],
     "links": [],
     "featured": false
   },
@@ -145,18 +150,13 @@
     "name": "Turtle Shelter Project Website",
     "tagline": "Competed to build the best solution for a nonprofit that was looking to scale their humanitarian reach.",
     "context": {
-      "type": "INTEX Competition ",
+      "type": "INTEX Competition",
       "source": "The Turtle Shelter Project"
     },
     "status": "In progress",
-    "problem": "A local humanitarian nonprofit was running everything with a generic website and a database that consisted of a memo on an iPhone. ",
+    "problem": "A local humanitarian nonprofit was running everything with a generic website and a database that consisted of a memo on an iPhone.",
     "built": "On a team of four I worked as the cloud solution architect and database engineer to build a web application that hosted real-time data for a nonprofit. I made sure that data would report instantly from the cloud database to the dashboard and other metrics tracking devices on the site.",
-    "stack": [
-      "AWS EC2",
-      "Postgres",
-      "JavaScript",
-      "Tableau"
-    ],
+    "stack": ["AWS EC2", "Postgres", "JavaScript", "Tableau"],
     "links": []
   }
 ]

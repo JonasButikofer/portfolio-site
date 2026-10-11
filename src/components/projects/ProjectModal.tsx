@@ -51,38 +51,38 @@ export function ProjectModal({ project, onClose }: ProjectModalProps) {
   }, [onClose]);
 
   const p = displayedProject;
+  const sectionLabel =
+    'text-muted m-0 mt-6 mb-1.5 font-mono text-xs font-medium tracking-[0.06em] uppercase';
 
   return (
     <dialog
       ref={dialogRef}
       aria-labelledby={p ? titleId : undefined}
-      className="project-modal fixed inset-0 m-0 h-full max-h-none w-full max-w-none border-0 bg-transparent p-0 backdrop:bg-transparent sm:inset-auto sm:m-auto sm:h-auto sm:max-h-[85vh] sm:w-full sm:max-w-2xl sm:p-4"
+      className="project-modal text-text fixed inset-0 m-0 h-full max-h-none w-full max-w-none border-0 bg-transparent p-0 backdrop:bg-transparent sm:m-auto sm:h-fit sm:max-h-[calc(100dvh-40px)] sm:w-full sm:max-w-[760px] sm:p-3"
       onClick={(event) => {
         if (event.target === event.currentTarget) onClose();
       }}
     >
       {p && (
-        <div className="bg-surface sm:border-line flex h-full max-h-[100dvh] flex-col border-0 sm:h-auto sm:max-h-[85vh] sm:border">
-          <header className="border-line flex shrink-0 items-start justify-between gap-4 border-b p-6">
+        <div className="bg-tile border-line flex h-full max-h-[100dvh] flex-col border-0 sm:h-auto sm:max-h-[calc(100dvh-64px)] sm:rounded-3xl sm:border">
+          <header className="flex shrink-0 items-start justify-between gap-4 px-7 pt-7">
             <div>
-              <h2 id={titleId} className="font-display text-text text-xl">
+              <p className="eyebrow m-0">
+                {p.context.type}
+                {p.context.source && ` · ${p.context.source}`}
+              </p>
+              <h2 id={titleId} className="m-0 mt-3.5 text-[40px] leading-[1.02] tracking-[-0.04em]">
                 {p.name}
               </h2>
-              <p className="font-display text-2xs text-muted mt-1">
-                {p.context.type}
-                <span className="border-line mx-2 border-l" aria-hidden="true" />
-                {p.context.source}
-                <span className="border-line mx-2 border-l" aria-hidden="true" />
-                {p.status}
-              </p>
+              <p className="text-muted m-0 mt-1.5 text-lg">{p.tagline}</p>
             </div>
             <button
               type="button"
               onClick={onClose}
               aria-label="Close"
-              className="text-muted hover:text-text flex h-11 w-11 shrink-0 items-center justify-center transition-colors"
+              className="border-line bg-tile-2 text-text hover:border-muted flex h-10 w-10 shrink-0 cursor-pointer items-center justify-center rounded-full border transition-colors"
             >
-              <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true">
+              <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true">
                 <path
                   d="M6 6l12 12M18 6L6 18"
                   stroke="currentColor"
@@ -95,79 +95,97 @@ export function ProjectModal({ project, onClose }: ProjectModalProps) {
           </header>
 
           <div
-            className="min-h-0 flex-1 overflow-y-auto p-6"
+            className="min-h-0 flex-1 overflow-y-auto px-7 pt-5 pb-7"
             tabIndex={0}
             role="region"
             aria-label={`${p.name} details`}
           >
-            <section>
-              <h3 className="font-display text-muted text-xs">The problem</h3>
-              <p className="font-body text-text mt-2 max-w-(--measure) text-base">{p.problem}</p>
-            </section>
+            <dl className="m-0 grid grid-cols-1 gap-2.5 sm:grid-cols-3">
+              <div className="border-line bg-tile-2 rounded-2xl border px-3.5 py-3">
+                <dt className="text-muted font-mono text-[11px] font-medium tracking-[0.06em] uppercase">
+                  Status
+                </dt>
+                <dd className="m-0 font-medium">{p.status}</dd>
+              </div>
+              <div className="border-line bg-tile-2 rounded-2xl border px-3.5 py-3">
+                <dt className="text-muted font-mono text-[11px] font-medium tracking-[0.06em] uppercase">
+                  {p.featuredMetric ? 'Impact' : 'Context'}
+                </dt>
+                <dd className="m-0 font-medium">
+                  {p.featuredMetric ? (
+                    <>
+                      <span className="text-accent text-[28px] font-semibold tracking-[-0.03em]">
+                        {p.featuredMetric.value}
+                      </span>{' '}
+                      <span className="text-muted text-[13px]">{p.featuredMetric.label}</span>
+                    </>
+                  ) : (
+                    p.context.source || p.context.type
+                  )}
+                </dd>
+              </div>
+              <div className="border-line bg-tile-2 rounded-2xl border px-3.5 py-3">
+                <dt className="text-muted font-mono text-[11px] font-medium tracking-[0.06em] uppercase">
+                  Stack
+                </dt>
+                <dd className="m-0 font-medium">{p.stack.length} tools</dd>
+              </div>
+            </dl>
 
-            <section className="mt-8">
-              <h3 className="font-display text-muted text-xs">What I built</h3>
-              <p className="font-body text-text mt-2 max-w-(--measure) text-base">{p.built}</p>
-            </section>
+            <h3 className={sectionLabel}>The problem</h3>
+            <p className="m-0 max-w-(--measure) text-base">{p.problem}</p>
+
+            <h3 className={sectionLabel}>What I built</h3>
+            <p className="m-0 max-w-(--measure) text-base">{p.built}</p>
 
             {p.architecture && p.architecture.length > 0 && (
-              <section className="mt-8">
-                <h3 className="font-display text-muted text-xs">Architecture</h3>
-                <ol className="mt-2 flex flex-col gap-2">
+              <>
+                <h3 className={sectionLabel}>How it flows</h3>
+                <ol className="m-0 flex list-none flex-col gap-[18px] p-0">
                   {p.architecture.map((step, index) => (
-                    <li key={step} className="font-body text-text flex gap-3 text-base">
-                      <span className="text-2xs text-muted font-mono">
-                        {String(index + 1).padStart(2, '0')}
-                      </span>
-                      <span>{step}</span>
+                    <li
+                      key={step}
+                      className={`border-line bg-tile-2 relative rounded-xl border px-3.5 py-2.5 text-sm ${index > 0 ? "before:text-muted before:absolute before:-top-[18px] before:left-[18px] before:text-[13px] before:leading-[18px] before:content-['↓']" : ''}`}
+                    >
+                      {step}
                     </li>
                   ))}
                 </ol>
-              </section>
+              </>
             )}
 
             {p.outcome && (
-              <section className="mt-8">
-                <h3 className="font-display text-muted text-xs">Outcome</h3>
-                {p.featuredMetric && (
-                  <p className="font-display text-gold mt-2 text-2xl">
-                    {p.featuredMetric.value}
-                    <span className="font-body text-2xs text-muted ml-2">
-                      {p.featuredMetric.label}
-                    </span>
-                  </p>
-                )}
-                <p className="font-body text-text mt-2 max-w-(--measure) text-base">{p.outcome}</p>
-              </section>
+              <>
+                <h3 className={sectionLabel}>Outcome</h3>
+                <p className="m-0 max-w-(--measure) text-base">{p.outcome}</p>
+              </>
             )}
 
-            <section className="mt-8">
-              <h3 className="font-display text-muted text-xs">Stack</h3>
-              <div className="mt-2 flex flex-wrap gap-2">
-                {p.stack.map((tech) => (
-                  <Chip key={tech}>{tech}</Chip>
-                ))}
-              </div>
-            </section>
+            <h3 className={sectionLabel}>Stack</h3>
+            <div className="flex flex-wrap gap-1.5">
+              {p.stack.map((tech) => (
+                <Chip key={tech}>{tech}</Chip>
+              ))}
+            </div>
 
             {p.links.length > 0 && (
-              <section className="mt-8">
-                <h3 className="font-display text-muted text-xs">Links</h3>
-                <ul className="mt-2 flex flex-wrap gap-x-6 gap-y-2">
+              <>
+                <h3 className={sectionLabel}>Links</h3>
+                <ul className="m-0 flex list-none flex-wrap gap-x-6 gap-y-2 p-0">
                   {p.links.map((link) => (
                     <li key={link.href}>
                       <a
                         href={link.href}
                         target="_blank"
                         rel="noreferrer"
-                        className="font-display text-gold hover:decoration-gold text-base underline decoration-transparent underline-offset-4 transition-colors"
+                        className="text-accent hover:decoration-accent text-base font-medium underline decoration-transparent underline-offset-4 transition-colors"
                       >
                         {link.label || LINK_LABEL_BY_KIND[link.kind]}
                       </a>
                     </li>
                   ))}
                 </ul>
-              </section>
+              </>
             )}
           </div>
         </div>

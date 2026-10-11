@@ -2,11 +2,11 @@ interface ChipProps {
   children: React.ReactNode;
 }
 
-/** A quiet hairline-bordered label. Used for status and stack tags — no
- * color-coding, no shadow: gold stays reserved for interactive affordances. */
+/** A quiet hairline-bordered mono label for stack tags. No color-coding:
+ * the accent stays reserved for interactive affordances. */
 export function Chip({ children }: ChipProps) {
   return (
-    <span className="border-line text-2xs text-muted inline-flex items-center rounded-sm border px-2 py-0.5">
+    <span className="border-line bg-tile-2 text-muted inline-flex items-center rounded-full border px-2 py-0.5 font-mono text-[11.5px]">
       {children}
     </span>
   );

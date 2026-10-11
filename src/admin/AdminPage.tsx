@@ -57,12 +57,12 @@ export function AdminPage() {
   }
 
   if (status === 'loading') {
-    return <div className="bg-ink text-text min-h-screen p-10">Loading content…</div>;
+    return <div className="bg-page text-text min-h-screen p-10">Loading content…</div>;
   }
 
   if (!content) {
     return (
-      <div className="bg-ink min-h-screen p-10 text-red-400">
+      <div className="bg-page min-h-screen p-10 text-red-400">
         Couldn't load content: {error}
         <br />
         Is `npm run dev` (not `npm run build`/`preview`) running? The admin API only exists in the
@@ -82,10 +82,10 @@ export function AdminPage() {
   }
 
   return (
-    <div className="bg-ink text-text font-body min-h-screen">
-      <header className="border-line bg-ink sticky top-0 z-10 flex flex-wrap items-center justify-between gap-3 border-b px-6 py-4">
+    <div className="bg-page text-text min-h-screen font-sans">
+      <header className="border-line bg-page sticky top-0 z-10 flex flex-wrap items-center justify-between gap-3 border-b px-6 py-4">
         <div>
-          <h1 className="font-display text-base font-semibold">Content admin</h1>
+          <h1 className="font-sans text-base font-semibold">Content admin</h1>
           <p className="text-muted text-xs">
             Dev-only. Writes straight to src/data/*.json. Not part of the deployed site.
           </p>
@@ -103,7 +103,7 @@ export function AdminPage() {
             type="button"
             onClick={handleSave}
             disabled={status === 'saving'}
-            className="bg-gold text-ink rounded-sm px-4 py-2 text-sm font-semibold disabled:opacity-50"
+            className="bg-accent text-page rounded-sm px-4 py-2 text-sm font-semibold disabled:opacity-50"
           >
             {status === 'saving' ? 'Saving…' : 'Save all changes'}
           </button>
@@ -132,7 +132,7 @@ export function AdminPage() {
 function Section({ title, children }: { title: string; children: ReactNode }) {
   return (
     <section className="flex flex-col gap-4">
-      <h2 className="font-display text-gold text-lg">{title}</h2>
+      <h2 className="text-accent font-sans text-lg">{title}</h2>
       {children}
     </section>
   );
@@ -163,7 +163,23 @@ function IdentitySection({ person, onChange }: { person: Person; onChange: (p: P
         <Field label="Minor" {...bind(person, 'minor', onChange)} />
         <Field label="School" {...bind(person, 'school', onChange)} />
       </div>
-      <Field label="GPA line" {...bind(person, 'gpa', onChange)} />
+      <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
+        <Field
+          label="Degree (short)"
+          hint="tile + cover chip"
+          {...bind(person, 'degreeShort', onChange)}
+        />
+        <Field label="School (short)" hint="e.g. BYU" {...bind(person, 'schoolShort', onChange)} />
+      </div>
+      <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
+        <Field label="Major GPA" hint="number only" {...bind(person, 'gpa', onChange)} />
+        <Field label="Honors" {...bind(person, 'honors', onChange)} />
+      </div>
+      <Field
+        label="Current role"
+        hint="cover chip, e.g. Zions Bancorporation · EDW"
+        {...bind(person, 'currentRole', onChange)}
+      />
       <Field label="Certification" {...bind(person, 'certification', onChange)} />
     </Section>
   );

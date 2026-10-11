@@ -1,0 +1,290 @@
+/*
+  Cover — the full-height first screen. Two grid cells that never overlap:
+  name + credentials on the left, the portrait cutout on the right (stacked
+  on narrow screens). The name is sized off its own column's width (cqi) so
+  the longest line always fits its cell.
+*/
+
+.cover {
+  position: relative;
+  overflow: hidden;
+  color: #fff;
+  height: 100svh;
+  min-height: 640px;
+  display: grid;
+  grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr);
+  grid-template-rows: auto minmax(0, 1fr);
+  column-gap: clamp(24px, 4vw, 64px);
+  padding: 0 clamp(20px, 5vw, 80px);
+  background: radial-gradient(120% 100% at 70% 40%, var(--color-cover-1), var(--color-cover-2) 78%);
+}
+
+.cover-nav {
+  grid-column: 1 / -1;
+  justify-self: center;
+  z-index: 2;
+  margin-top: 18px;
+  display: flex;
+  gap: 4px;
+  padding: 5px;
+  border-radius: 99px;
+  font-size: 14px;
+  background: rgb(255 255 255 / 10%);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgb(255 255 255 / 16%);
+}
+
+.cover-nav a {
+  text-decoration: none;
+  padding: 7px 14px;
+  border-radius: 99px;
+  color: rgb(255 255 255 / 85%);
+}
+
+.cover-nav a:hover {
+  background: rgb(255 255 255 / 16%);
+  color: #fff;
+}
+
+.cover-copy {
+  grid-column: 1;
+  grid-row: 2;
+  align-self: center;
+  container-type: inline-size;
+  padding-bottom: 4svh;
+  will-change: transform, opacity;
+}
+
+.cover-copy > * {
+  animation: cover-rise 0.9s cubic-bezier(0.2, 0.8, 0.2, 1) both;
+  animation-delay: calc(var(--i, 0) * 70ms + 100ms);
+}
+
+.cover-status {
+  display: inline-flex;
+  gap: 8px;
+  align-items: center;
+  font: 500 12px var(--font-mono);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  padding: 6px 12px 6px 10px;
+  border-radius: 99px;
+  background: rgb(255 255 255 / 12%);
+  border: 1px solid rgb(255 255 255 / 18%);
+}
+
+.cover-status i {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #5ef0a4;
+  box-shadow: 0 0 0 3px rgb(94 240 164 / 25%);
+}
+
+.cover-name {
+  margin: 22px 0 0;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: -0.045em;
+  line-height: 0.86;
+  font-size: clamp(52px, 8vw, 176px);
+  font-size: min(17cqi, 176px);
+}
+
+.cover-name span {
+  display: block;
+}
+
+.cover-name span + span {
+  color: rgb(255 255 255 / 62%);
+}
+
+.cover-tagline {
+  margin: 22px 0 0;
+  font-size: clamp(17px, 1.5vw, 21px);
+  line-height: 1.45;
+  max-width: 34ch;
+  color: rgb(255 255 255 / 88%);
+}
+
+.cover-facts {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 26px;
+}
+
+.cover-fact {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  padding: 11px 15px;
+  border-radius: 14px;
+  background: rgb(8 32 42 / 32%);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgb(255 255 255 / 16%);
+}
+
+.cover-fact b {
+  font: 500 11px var(--font-mono);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  opacity: 0.7;
+}
+
+.cover-fact span {
+  font-size: 15.5px;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+}
+
+.cover-fact .cover-fact-number {
+  font-size: 24px;
+  letter-spacing: -0.035em;
+  line-height: 1.05;
+}
+
+.cover-ctas {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 28px;
+}
+
+.cover-cta {
+  text-decoration: none;
+  padding: 11px 18px;
+  border-radius: 99px;
+  font-weight: 500;
+  font-size: 14.5px;
+  color: #fff;
+  border: 1px solid rgb(255 255 255 / 28%);
+  transition:
+    background 0.2s,
+    border-color 0.2s;
+}
+
+.cover-cta:hover {
+  background: rgb(255 255 255 / 12%);
+  border-color: rgb(255 255 255 / 50%);
+}
+
+.cover-cta.is-primary {
+  background: #fff;
+  color: #0f2f3a;
+  border-color: #fff;
+}
+
+.cover-cta.is-primary:hover {
+  background: #e7f4f6;
+}
+
+.cover-portrait {
+  grid-column: 2;
+  grid-row: 2;
+  position: relative;
+  min-height: 0;
+  will-change: transform;
+}
+
+/* soft light behind the figure */
+.cover-portrait::before {
+  content: '';
+  position: absolute;
+  left: 50%;
+  bottom: 8%;
+  width: min(92%, 640px);
+  aspect-ratio: 1;
+  transform: translateX(-50%);
+  border-radius: 50%;
+  background: radial-gradient(circle, rgb(255 255 255 / 20%), rgb(255 255 255 / 0%) 68%);
+}
+
+.cover-portrait img {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  object-position: center bottom;
+  filter: drop-shadow(0 30px 40px rgb(5 25 35 / 35%));
+  animation: cover-lift 1.1s 0.2s cubic-bezier(0.2, 0.8, 0.2, 1) both;
+}
+
+.cover-short {
+  display: none;
+}
+
+@keyframes cover-rise {
+  from {
+    opacity: 0;
+    transform: translateY(28px);
+  }
+}
+
+@keyframes cover-lift {
+  from {
+    opacity: 0;
+    transform: translateY(40px);
+  }
+}
+
+/* Narrow: stack — copy on top, portrait fills the rest below it */
+@media (max-width: 820px) {
+  .cover {
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-rows: auto auto minmax(260px, 1fr);
+    padding: 0 20px;
+  }
+
+  .cover-copy {
+    grid-column: 1;
+    grid-row: 2;
+    align-self: start;
+    padding: 22px 0 0;
+  }
+
+  .cover-portrait {
+    grid-column: 1;
+    grid-row: 3;
+    margin-top: 14px;
+  }
+
+  .cover-name {
+    margin-top: 16px;
+    font-size: min(18cqi, 96px);
+  }
+
+  .cover-tagline {
+    margin-top: 14px;
+    font-size: 16px;
+  }
+
+  .cover-facts {
+    margin-top: 16px;
+    gap: 8px;
+    flex-wrap: nowrap;
+  }
+
+  .cover-fact {
+    padding: 8px 12px;
+  }
+
+  .cover-fact span {
+    font-size: 14px;
+  }
+
+  .cover-fact .cover-fact-number {
+    font-size: 18px;
+  }
+
+  .cover-fact.is-wide-only,
+  .cover-ctas,
+  .cover-nav .is-wide-only,
+  .cover-long {
+    display: none;
+  }
+
+  .cover-short {
+    display: inline;
+  }
+}

@@ -23,6 +23,24 @@ export interface ProjectContext {
   source: string; // course code or employer
 }
 
+/** One bar in a featured metric's before/after comparison. Bars are drawn to
+ * scale against the largest `value` in the set, so keep units consistent. */
+export interface MetricComparisonRow {
+  label: string; // 'before', 'baseline', ...
+  display: string; // what the bar is labelled with: '2+ hr'
+  value: number; // drawn to scale
+  note: string; // hover tooltip
+}
+
+/** A project's headline number. Projects with one render as an impact tile;
+ * `comparison` adds before/after bars, `units` a dot-per-item unit chart. */
+export interface FeaturedMetric {
+  value: string;
+  label: string;
+  comparison?: MetricComparisonRow[];
+  units?: number;
+}
+
 export interface Project {
   slug: string;
   name: string;
@@ -34,7 +52,7 @@ export interface Project {
   architecture?: string[];
   outcome?: string;
   stack: string[];
-  featuredMetric?: { value: string; label: string };
+  featuredMetric?: FeaturedMetric;
   links: ProjectLink[];
   featured?: boolean;
 }

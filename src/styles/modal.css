@@ -38,7 +38,7 @@ dialog.project-modal::backdrop {
 }
 
 dialog.project-modal[open]::backdrop {
-  background-color: rgb(17 26 38 / 72%);
+  background-color: rgb(10 20 26 / 50%);
 }
 
 @starting-style {

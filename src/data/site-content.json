@@ -3,14 +3,18 @@
   "person": {
     "name": "Jonas Butikofer",
     "role": "Data Engineer",
-    "positioningLine": "I am a Data Engineer and Data Analyst that loves to automate your pain points. ",
+    "positioningLine": "Data engineer & analyst who automates your pain points — lakehouses, pipelines, tests, and forecasts.",
     "location": "Provo, UT",
     "openTo": "SLC Area, DC Metro Area, and other locations",
     "graduation": "April 2027",
     "degree": "Master of Science in Information Systems Management",
+    "degreeShort": "M.S. Information Systems Management",
     "minor": "Economics",
     "school": "Brigham Young University",
-    "gpa": "Major GPA: 3.91, Dean’s List (top 5%): 2024, 2025",
+    "schoolShort": "BYU",
+    "gpa": "3.91",
+    "honors": "Dean’s List (top 5%) · 2024, 2025",
+    "currentRole": "Zions Bancorporation · EDW",
     "certification": ""
   },
   "contact": {
@@ -43,27 +47,18 @@
     },
     {
       "title": "Analysis & modeling",
-      "items": [
-        "Python / Pandas",
-        "R (tidyverse, tidymodels, modeltime, vetiver)",
-        "Tableau"
-      ]
+      "items": ["Python / Pandas", "R (tidyverse, tidymodels, modeltime, vetiver)", "Tableau"]
     },
     {
       "title": "Platform & automation",
-      "items": [
-        "PowerShell",
-        "AWS",
-        "Azure",
-        "Git"
-      ]
+      "items": ["PowerShell", "AWS", "Azure", "Git"]
     }
   ],
   "econometricsNote": "One year of research plus PhD-seminar methods coursework",
   "experience": [
     {
       "org": "Zions Bancorporation",
-      "title": "Enterprise Data Warehouse Intern--Data Analyst",
+      "title": "Enterprise Data Warehouse Intern — Data Analyst",
       "location": "Midvale, UT",
       "start": "May 2026",
       "end": "present",
@@ -79,7 +74,7 @@
     {
       "org": "Brigham Young University Economics Department",
       "title": "Data Scientist/Research Assistant",
-      "location": "",
+      "location": "Provo, UT",
       "start": "Sep 2024",
       "end": "Aug 2025"
     }

@@ -1,43 +1,72 @@
 /*
-  Token layer — color and type only (SPEC.md §4.2, §4.3).
-  Layout and spacing use Tailwind's utility scale directly.
-  Registered via @theme so Tailwind generates utilities from these
-  (bg-ink, text-gold, border-line, font-display, text-step-4, ...).
+  Token layer — color and type only. Layout and spacing use Tailwind's
+  utility scale directly. Registered via @theme so Tailwind generates
+  utilities from these (bg-page, bg-tile, text-muted, border-line, ...).
+
+  Light is the default; the dark set below applies when the OS prefers dark
+  (unless the visitor picked light with the theme toggle, which sets
+  data-theme on <html>) or when data-theme="dark" is set explicitly.
 */
 
 @theme {
-  /* Color — medallion architecture, dark-first. --gold is the only accent. */
-  --color-ink: #111a26;
-  --color-surface: #1a2532;
-  --color-line: #2c3a4a;
-  --color-text: #e7ecf2;
-  --color-muted: #90a0b3;
-  --color-gold: #d9a441;
-  --color-bronze: #a8703c;
-  --color-silver: #b9c3ce;
+  /* Surfaces & text */
+  --color-page: #edf2f2;
+  --color-tile: #ffffff;
+  --color-tile-2: #f4f7f7;
+  --color-line: #dde5e6;
+  --color-text: #0f1d26;
+  --color-muted: #5d6c73;
 
-  /* Sampled from the About-section photo (backdrop + shirt). Scoped to
-     that one photo frame only — not part of the main palette, and never
-     used as a substitute for --gold. */
-  --color-photo-backdrop: #7ca8b7;
-  --color-photo-shirt: #4f6192;
+  /* The one interactive accent, and the ink that sits on it */
+  --color-accent: #1d6b7d;
+  --color-accent-ink: #ffffff;
+
+  /* Cover background — a deeper teal drawn from the photo's studio backdrop */
+  --color-cover-1: #3f8697;
+  --color-cover-2: #1d4b5a;
+
+  /* Studio backdrop sampled from the portrait, top → bottom. Only used
+     behind the cutout (e.g. the avatar), never as a UI color. */
+  --color-backdrop-1: #93c4d5;
+  --color-backdrop-2: #70a1b2;
+
+  /* Medallion layer colors — Beacon's bronze/silver/gold tiles only */
+  --color-bronze: #b4743c;
+  --color-silver: #98a2ad;
+  --color-gold: #d6a12b;
 
   /* Type families */
-  --font-display: 'Archivo', ui-sans-serif, system-ui, sans-serif;
-  --font-body: 'Source Serif 4', ui-serif, Georgia, serif;
-  --font-mono: 'JetBrains Mono', ui-monospace, 'SFMono-Regular', monospace;
-
-  /* Modular scale — base 1.125rem (18px), ratio 1.25 */
-  --text-2xs: 0.9rem; /* 14.4px — metadata, chip labels */
-  --text-xs: 1rem; /* 16px — small UI text */
-  --text-base: 1.125rem; /* 18px — body copy */
-  --text-md: 1.406rem; /* 22.5px — lead paragraph, h4 */
-  --text-lg: 1.758rem; /* 28px — h3 */
-  --text-xl: 2.197rem; /* 35px — h2 */
-  --text-2xl: 2.747rem; /* 44px — section heading, positioning line */
-  --text-3xl: 3.433rem; /* 55px — hero name, mobile */
-  --text-4xl: 4.292rem; /* 69px — hero name, desktop */
+  --font-sans: 'Geist', ui-sans-serif, system-ui, sans-serif;
+  --font-mono: 'Geist Mono', ui-monospace, 'SFMono-Regular', monospace;
 
   /* Content measure */
   --measure: 65ch;
+}
+
+@layer base {
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme='light']) {
+      --color-page: #091316;
+      --color-tile: #101d21;
+      --color-tile-2: #142429;
+      --color-line: #1f3238;
+      --color-text: #eaf2f3;
+      --color-muted: #8fa3a8;
+      --color-accent: #5fc0d3;
+      --color-accent-ink: #062027;
+      color-scheme: dark;
+    }
+  }
+
+  :root[data-theme='dark'] {
+    --color-page: #091316;
+    --color-tile: #101d21;
+    --color-tile-2: #142429;
+    --color-line: #1f3238;
+    --color-text: #eaf2f3;
+    --color-muted: #8fa3a8;
+    --color-accent: #5fc0d3;
+    --color-accent-ink: #062027;
+    color-scheme: dark;
+  }
 }

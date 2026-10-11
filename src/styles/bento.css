@@ -1,0 +1,203 @@
+/*
+  Bento tiles. The grid itself and each tile's column/row spans are Tailwind
+  utilities in the components; this file is the tile surface and the pieces
+  inside tiles (eyebrows, metric bars, medallion layers, contact tile).
+*/
+
+:root {
+  --tile-shadow: 0 1px 0 rgb(0 0 0 / 3%), 0 10px 30px -14px rgb(15 40 50 / 18%);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme='light']) {
+    --tile-shadow: none;
+  }
+}
+
+:root[data-theme='dark'] {
+  --tile-shadow: none;
+}
+
+@layer components {
+  .tile {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    min-height: 150px;
+    overflow: hidden;
+    padding: 22px;
+    border-radius: 20px;
+    border: 1px solid var(--color-line);
+    background: var(--color-tile);
+    box-shadow: var(--tile-shadow);
+    color: var(--color-text);
+  }
+
+  button.tile {
+    font: inherit;
+    text-align: left;
+    cursor: pointer;
+    transition:
+      transform 0.2s,
+      border-color 0.2s;
+  }
+
+  button.tile:hover {
+    transform: translateY(-2px);
+    border-color: color-mix(in srgb, var(--color-text) 25%, var(--color-line));
+  }
+
+  .eyebrow {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 8px;
+    font: 500 12px var(--font-mono);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--color-muted);
+  }
+
+  .open-icon {
+    display: grid;
+    place-items: center;
+    flex: none;
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    border: 1px solid var(--color-line);
+    color: var(--color-text);
+    font-size: 14px;
+    transition: 0.2s;
+  }
+
+  button.tile:hover .open-icon {
+    background: var(--color-text);
+    border-color: var(--color-text);
+    color: var(--color-page);
+    transform: rotate(-45deg);
+  }
+
+  /* Metric tiles: one measure, before/after bars drawn to scale */
+  .metric-bars {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    margin-top: auto;
+    padding-top: 18px;
+  }
+
+  .metric-bar {
+    display: grid;
+    grid-template-columns: 62px minmax(0, 1fr) 58px;
+    gap: 8px;
+    align-items: center;
+    font: 12px var(--font-mono);
+    color: var(--color-muted);
+  }
+
+  .metric-bar i {
+    position: relative;
+    height: 10px;
+    border-radius: 0 4px 4px 0;
+    background: color-mix(in srgb, var(--color-muted) 35%, transparent);
+  }
+
+  .metric-bar.is-after i {
+    background: var(--color-accent);
+  }
+
+  .metric-bar b {
+    font-weight: 500;
+    color: var(--color-text);
+    white-space: nowrap;
+  }
+
+  /* Hover layer for marks: a tooltip from data-note, no JS */
+  [data-note]:hover::after {
+    content: attr(data-note);
+    position: absolute;
+    bottom: calc(100% + 8px);
+    left: 0;
+    z-index: 5;
+    width: max-content;
+    max-width: 220px;
+    padding: 6px 9px;
+    border-radius: 8px;
+    font: 12px var(--font-mono);
+    background: var(--color-text);
+    color: var(--color-page);
+    pointer-events: none;
+  }
+
+  .unit-chart {
+    display: grid;
+    grid-template-columns: repeat(25, minmax(0, 1fr));
+    gap: 4px;
+    max-width: 300px;
+    margin-top: auto;
+    padding-top: 18px;
+  }
+
+  .unit-chart i {
+    aspect-ratio: 1;
+    border-radius: 3px;
+    background: var(--color-accent);
+  }
+
+  /* Featured project: medallion layers that fill in turn */
+  .layer {
+    position: relative;
+    overflow: hidden;
+    padding: 12px;
+    border-radius: 12px;
+    border: 1px solid var(--color-line);
+    background: var(--color-tile-2);
+    font-size: 13px;
+  }
+
+  .layer::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    height: 3px;
+    background: var(--layer-color);
+    transform-origin: left;
+    animation: layer-fill 2.4s ease-in-out infinite;
+    animation-delay: var(--layer-delay);
+  }
+
+  .contact-tile {
+    border-color: var(--color-accent);
+    background: var(--color-accent);
+    color: var(--color-accent-ink);
+  }
+
+  .contact-tile .eyebrow {
+    color: inherit;
+    opacity: 0.8;
+  }
+
+  .avatar {
+    flex: none;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    background-color: var(--color-backdrop-1);
+    background-repeat: no-repeat;
+    background-position: 56% 4%;
+    background-size: 200%;
+  }
+}
+
+@keyframes layer-fill {
+  0% {
+    transform: scaleX(0);
+  }
+  40%,
+  100% {
+    transform: scaleX(1);
+  }
+}

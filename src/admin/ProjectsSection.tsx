@@ -54,7 +54,7 @@ export function ProjectsSection({ projects, onChange }: ProjectsSectionProps) {
   return (
     <section className="flex flex-col gap-4">
       <div>
-        <h2 className="font-display text-gold text-lg">Projects</h2>
+        <h2 className="text-accent font-sans text-lg">Projects</h2>
         <p className="text-muted text-xs">
           Order matters — the grid reads top to bottom in this order. Changing a slug breaks any
           existing ?project= links to it.
@@ -123,7 +123,7 @@ function ProjectCard({
   return (
     <div className="border-line flex flex-col gap-4 border p-5">
       <div className="flex items-center justify-between">
-        <span className="font-display text-text text-base">{project.name || '(untitled)'}</span>
+        <span className="text-text font-sans text-base">{project.name || '(untitled)'}</span>
         <div className="flex gap-3">
           <button
             type="button"

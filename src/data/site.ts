@@ -18,9 +18,13 @@ export interface Person {
   openTo: string;
   graduation: string;
   degree: string;
+  degreeShort: string; // fits a tile/chip: 'M.S. Information Systems Management'
   minor: string;
   school: string;
-  gpa: string;
+  schoolShort: string; // 'BYU'
+  gpa: string; // the number only, e.g. '3.91'
+  honors: string;
+  currentRole: string; // cover chip, e.g. 'Zions Bancorporation · EDW'
   certification: string;
 }
 
