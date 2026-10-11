@@ -1,0 +1,87 @@
+{
+  "domain": "jonasbutikofer.com",
+  "person": {
+    "name": "Jonas Butikofer",
+    "role": "Data Engineer",
+    "positioningLine": "I am a Data Engineer and Data Analyst that loves to automate your pain points. ",
+    "location": "Provo, UT",
+    "openTo": "SLC Area, DC Metro Area, and other locations",
+    "graduation": "April 2027",
+    "degree": "Master of Science in Information Systems Management",
+    "minor": "Economics",
+    "school": "Brigham Young University",
+    "gpa": "Major GPA: 3.91, Dean’s List (top 5%): 2024, 2025",
+    "certification": ""
+  },
+  "contact": {
+    "githubUrl": "https://github.com/JonasButikofer",
+    "linkedinUrl": "https://www.linkedin.com/in/jonasbutikofer",
+    "email": "jonasbutikofer@gmail.com",
+    "resumeHref": "/resume.pdf"
+  },
+  "capabilityGroups": [
+    {
+      "title": "Warehouse & transform",
+      "items": [
+        "SQL Server / T-SQL",
+        "Snowflake",
+        "Databricks + Delta Lake",
+        "dbt",
+        "PostgreSQL",
+        "MongoDB"
+      ]
+    },
+    {
+      "title": "Pipelines & orchestration",
+      "items": [
+        "PySpark (batch + Structured Streaming)",
+        "Airflow",
+        "Prefect",
+        "Databricks Workflows",
+        "Docker"
+      ]
+    },
+    {
+      "title": "Analysis & modeling",
+      "items": [
+        "Python / Pandas",
+        "R (tidyverse, tidymodels, modeltime, vetiver)",
+        "Tableau"
+      ]
+    },
+    {
+      "title": "Platform & automation",
+      "items": [
+        "PowerShell",
+        "AWS",
+        "Azure",
+        "Git"
+      ]
+    }
+  ],
+  "econometricsNote": "One year of research plus PhD-seminar methods coursework",
+  "experience": [
+    {
+      "org": "Zions Bancorporation",
+      "title": "Enterprise Data Warehouse Intern--Data Analyst",
+      "location": "Midvale, UT",
+      "start": "May 2026",
+      "end": "present",
+      "note": ""
+    },
+    {
+      "org": "The Church of Jesus Christ of Latter-day Saints",
+      "title": "Database Engineer Intern",
+      "location": "Riverton, UT",
+      "start": "Aug 2025",
+      "end": "May 2026"
+    },
+    {
+      "org": "Brigham Young University Economics Department",
+      "title": "Data Scientist/Research Assistant",
+      "location": "",
+      "start": "Sep 2024",
+      "end": "Aug 2025"
+    }
+  ]
+}

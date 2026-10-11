@@ -1,0 +1,48 @@
+/*
+  Project modal — native <dialog> gives us focus trap, Escape-to-close, and
+  focus return to the trigger for free. This just adds the open/close
+  transition (SPEC.md §4.5: 160-200ms, opacity + scale from 0.98) using
+  @starting-style so it animates both showModal() and close(), backdrop
+  included, with no JS animation and no extra dependency. Browsers without
+  support just show/hide instantly — no functional loss.
+*/
+
+dialog.project-modal {
+  opacity: 0;
+  transform: scale(0.98);
+  transition:
+    opacity 180ms ease,
+    transform 180ms ease,
+    display 180ms allow-discrete,
+    overlay 180ms allow-discrete;
+}
+
+dialog.project-modal[open] {
+  opacity: 1;
+  transform: scale(1);
+}
+
+@starting-style {
+  dialog.project-modal[open] {
+    opacity: 0;
+    transform: scale(0.98);
+  }
+}
+
+dialog.project-modal::backdrop {
+  background-color: rgb(17 26 38 / 0%);
+  transition:
+    background-color 180ms ease,
+    display 180ms allow-discrete,
+    overlay 180ms allow-discrete;
+}
+
+dialog.project-modal[open]::backdrop {
+  background-color: rgb(17 26 38 / 72%);
+}
+
+@starting-style {
+  dialog.project-modal[open]::backdrop {
+    background-color: rgb(17 26 38 / 0%);
+  }
+}

@@ -1,0 +1,31 @@
+<svg width="1200" height="630" viewBox="0 0 1200 630" xmlns="http://www.w3.org/2000/svg">
+  <rect width="1200" height="630" fill="#111A26" />
+
+  <!-- Simplified lineage motif, echoing the hero graph -->
+  <g stroke="#2C3A4A" stroke-width="2" fill="none">
+    <path d="M120,420 C160,420 160,460 200,460" />
+    <path d="M120,460 C160,460 160,460 200,460" />
+    <path d="M120,500 C160,500 160,460 200,460" />
+    <path d="M300,460 C340,460 340,460 380,460" />
+    <path d="M460,460 C500,460 500,430 540,430" />
+    <path d="M460,460 C500,460 500,490 540,490" />
+  </g>
+  <g fill="#1A2532" stroke="#2C3A4A" stroke-width="2">
+    <rect x="40" y="404" width="80" height="32" rx="6" />
+    <rect x="40" y="444" width="80" height="32" rx="6" />
+    <rect x="40" y="484" width="80" height="32" rx="6" />
+    <rect x="200" y="434" width="100" height="52" rx="7" />
+    <rect x="380" y="440" width="80" height="40" rx="6" />
+    <rect x="540" y="414" width="90" height="32" rx="6" />
+    <rect x="540" y="474" width="90" height="32" rx="6" />
+  </g>
+
+  <text x="80" y="220" font-family="Arial, sans-serif" font-size="88" font-weight="800" fill="#E7ECF2" letter-spacing="-2">Jonas Butikofer</text>
+  <text x="80" y="280" font-family="Arial, sans-serif" font-size="34" fill="#90A0B3">Data Engineer</text>
+  <text x="80" y="340" font-family="Arial, sans-serif" font-size="28" fill="#90A0B3">
+    <tspan x="80" dy="0">Pipelines and models that make financial</tspan>
+    <tspan x="80" dy="38">and operational data answerable.</tspan>
+  </text>
+
+  <rect x="80" y="570" width="56" height="4" fill="#D9A441" />
+</svg>

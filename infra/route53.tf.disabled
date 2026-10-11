@@ -1,0 +1,64 @@
+data "aws_route53_zone" "existing" {
+  count = var.route53_zone_already_exists ? 1 : 0
+  name  = var.domain_name
+}
+
+resource "aws_route53_zone" "site" {
+  count = var.route53_zone_already_exists ? 0 : 1
+  name  = var.domain_name
+}
+
+locals {
+  zone_id = var.route53_zone_already_exists ? data.aws_route53_zone.existing[0].zone_id : aws_route53_zone.site[0].zone_id
+}
+
+resource "aws_route53_record" "apex_a" {
+  zone_id = local.zone_id
+  name    = var.domain_name
+  type    = "A"
+
+  alias {
+    name                   = aws_cloudfront_distribution.site.domain_name
+    zone_id                = aws_cloudfront_distribution.site.hosted_zone_id
+    evaluate_target_health = false
+  }
+}
+
+resource "aws_route53_record" "apex_aaaa" {
+  zone_id = local.zone_id
+  name    = var.domain_name
+  type    = "AAAA"
+
+  alias {
+    name                   = aws_cloudfront_distribution.site.domain_name
+    zone_id                = aws_cloudfront_distribution.site.hosted_zone_id
+    evaluate_target_health = false
+  }
+}
+
+# www is served by the same distribution (as a second alternate domain name)
+# and redirected to the apex by a CloudFront Function — cheaper than a
+# second distribution (SPEC.md §7.1).
+resource "aws_route53_record" "www_a" {
+  zone_id = local.zone_id
+  name    = "www.${var.domain_name}"
+  type    = "A"
+
+  alias {
+    name                   = aws_cloudfront_distribution.site.domain_name
+    zone_id                = aws_cloudfront_distribution.site.hosted_zone_id
+    evaluate_target_health = false
+  }
+}
+
+resource "aws_route53_record" "www_aaaa" {
+  zone_id = local.zone_id
+  name    = "www.${var.domain_name}"
+  type    = "AAAA"
+
+  alias {
+    name                   = aws_cloudfront_distribution.site.domain_name
+    zone_id                = aws_cloudfront_distribution.site.hosted_zone_id
+    evaluate_target_health = false
+  }
+}
