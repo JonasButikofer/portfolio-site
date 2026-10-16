@@ -169,6 +169,55 @@
     "featured": false
   },
   {
+    "slug": "life-dashboard",
+    "name": "Life Dashboard",
+    "tagline": "A private, one-screen dashboard for my day, with a Claude assistant that can act on my email and calendar.",
+    "context": {
+      "type": "Personal project",
+      "source": "Built with Claude Code"
+    },
+    "status": "Ongoing",
+    "problem": "My day was spread across Canvas, Gmail, Google Calendar, bank exports, the weather and a hiking app. Checking all of them every morning took longer than the things they were telling me to do.",
+    "built": "A FastAPI app with a plain HTML/CSS/JS front end and SQLite that fits on one screen without scrolling. It pulls Canvas assignments, Gmail and Google Calendar (read-only, multiple accounts), card spending from CSV exports, nearby trails from OpenStreetMap with a 7-day forecast, and a national park photo of the day. The calendar has week, month and hour views with color-coding, and a morning brief sums up the day in one card. Every 15 minutes a background job scans new email for to-dos and events.",
+    "agents": [
+      {
+        "name": "Dashboard assistant",
+        "summary": "Ask in plain English (\"find my interview emails and remind me to send thank-yous on Friday\") and a Claude tool loop searches and reads email, checks the calendar and to-do list, then adds to-dos or suggests events.",
+        "points": [
+          "A deliberately narrow tool set: read-only email search and read, calendar list, to-do list, create a to-do, suggest an event. Nothing can send or delete email or write to Google directly.",
+          "Suggested events wait for my approval before anything reaches Google Calendar, and a deterministic event ID means approving twice can't create a duplicate.",
+          "Runs in a background thread with live progress, one run at a time, a daily cap and a turn limit; long digit runs are masked before any text reaches the model."
+        ]
+      },
+      {
+        "name": "Inbox triage",
+        "summary": "New mail goes through fixed rules first (a grocery delivery lands on the calendar), then a small Claude model returns schema-validated JSON deciding whether a message is a to-do, an event to suggest, or nothing.",
+        "points": [
+          "Caching and daily caps keep the cost predictable; replies are validated and only ever shown as plain text."
+        ]
+      }
+    ],
+    "architecture": [
+      "Sources — Canvas, Gmail, Google Calendar, card CSVs, OpenStreetMap trails, NWS weather, NPS photos",
+      "App — FastAPI and SQLite on a small AWS EC2 instance, with systemd timers for the 15-minute jobs",
+      "Access — Cloudflare Tunnel (no open ports) and Cloudflare Access, with the login token verified again inside the app",
+      "AI — Claude for inbox triage and the tool-using assistant; calendar writes need my approval",
+      "Ops — nightly SQLite backups with integrity checks, and 189 automated tests"
+    ],
+    "outcome": "Live and in daily use on my laptop and phone.",
+    "stack": [
+      "Python",
+      "FastAPI",
+      "Claude API",
+      "AWS EC2",
+      "SQLite",
+      "Google APIs",
+      "Cloudflare",
+      "JavaScript"
+    ],
+    "links": []
+  },
+  {
     "slug": "intex1",
     "name": "Turtle Shelter Project Website",
     "tagline": "Competed to build the best solution for a nonprofit that was looking to scale their humanitarian reach.",

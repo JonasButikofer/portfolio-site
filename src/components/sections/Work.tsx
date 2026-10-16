@@ -202,7 +202,14 @@ export function Work({ onOpen }: WorkProps) {
       {rest.map((project, index) => {
         // At two columns an odd last tile would sit alone — let it take the row.
         const lonely = index === rest.length - 1 && rest.length % 2 === 1;
-        const className = `lg:col-span-2 ${lonely ? 'sm:col-span-2' : ''}`;
+        // At six columns the first two tiles sit beside the featured one and the
+        // rest go three to a row. A short last row would leave a gap, so the
+        // trailing tiles go two to a row instead (the last 4 if one is left over,
+        // the last 2 if two are).
+        const leftover = (rest.length - 2) % 3;
+        const pairs = leftover === 1 && rest.length >= 6 ? 4 : leftover === 2 ? 2 : 0;
+        const wide = index >= 2 && index >= rest.length - pairs;
+        const className = `${wide ? 'lg:col-span-3' : 'lg:col-span-2'} ${lonely ? 'sm:col-span-2' : ''}`;
         return project.featuredMetric ? (
           <MetricTile
             key={project.slug}
